@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+       xmlns:p="http://primefaces.org/ui"
+       template="/WEB-INF/template.xhtml">
+    <h:head>
+        <title>Lista de Productos</title>
+    </h:head>
+    <ui:include src="menu.xhtml" />
+    <h:body>
+        <div class="card">
+            <h:form id="frmExclos"> 
+                <p:growl  id="mensajeGeneral3" sticky="false" showDetail="true" />   
+                <p:dataTable id="products" var="a"  value="#{productoBeans.listp}" styleClass="tabla" editable="true">
+                    <p:ajax listener="#{productoBeans.edit(a)}"  event="rowEdit" update=":frmExclos:mensajeGeneral3"/>
+
+                    <f:facet name="header">
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                            <h1>Lista de Productos</h1>
+
+                            <div>
+                                <p:commandButton id="toggler" type="button" value="Columnas" icon="pi pi-align-justify"/>
+                                <p:columnToggler datasource="products" trigger="toggler"/>
+                            </div>
+                            <div>
+                                <p:commandButton value="Actualizar" update="products" styleClass="ui-button-raised ui-button-danger"/>
+                            </div>
+                        </div>
+                    </f:facet>
+
+                    <p:column headerText="ID">
+                        <f:facet name="header">Id</f:facet>#{a.id} 
+                    </p:column>
+
+                    <p:column headerText="Nombre">
+                        <p:cellEditor> 
+                            <f:facet name="output">
+                                <h:outputText value="#{a.nombre}"  />
+                            </f:facet> 
+                            <f:facet name="input">
+                                <h:inputText value="#{a.nombre}" />
+                            </f:facet> 
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Strock">
+                        <p:cellEditor> 
+                            <f:facet name="output">
+                                <h:outputText value="#{a.stock}"  />
+                            </f:facet> 
+                            <f:facet name="input">
+                                <h:inputText value="#{a.stock}" />
+                            </f:facet> 
+                        </p:cellEditor>
+
+                    </p:column>
+
+                    <p:column headerText="Precio">
+                        <p:cellEditor> 
+                            <f:facet name="output">
+                                <h:outputText value="#{a.precio}"  />
+                            </f:facet> 
+                            <f:facet name="input">
+                                <h:inputText value="#{a.precio}" />
+                            </f:facet> 
+                        </p:cellEditor>
+
+                    </p:column>
+
+                    <p:column headerText="Total">
+                        <f:facet name="Total">Total</f:facet>#{productoBeans.sumar(a)} 
+                    </p:column>
+
+
+                    <p:column headerText="Eliminar">
+                        <p:commandButton value="Eliminar" action="#{productoBeans.delete(a)}" update="products" styleClass="ui-button-raised ui-button-danger"/>
+
+                    </p:column>
+                    <p:column headerText="Editar">
+                        <p:rowEditor />
+                    </p:column>
+                </p:dataTable>
+            </h:form>  
+        </div>
+    </h:body>
+</html>

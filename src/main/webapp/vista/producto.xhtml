@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
+-->
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+       xmlns:p="http://primefaces.org/ui"
+       template="/WEB-INF/template.xhtml">
+    <h:head>
+        <title>Producto</title>
+
+    </h:head>
+    <ui:include src="menu.xhtml" />
+    <h:body>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                </div>
+                <div class="col">
+                    <p:growl id="mensaje" showDetail="true"  />
+                    <h:form id="formulario" style="margin:20px;border-style: solid;border-width: 2" >
+                        <div class="card">
+                            <h2>Producto</h2>
+                            <div class="p-grid ui-fluid">
+                                <div class="p-col-12 p-md-4">
+
+                                    <p:outputLabel for="txtNombre" value="Nombre:"/>
+                                    <div class="ui-inputgroup">
+
+                                        <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
+                                        <p:inputText id="txtNombre" placeholder="Nombre:" value="#{productoBeans.nombre}" required="true"/>
+                                    </div>
+
+                                    <p:outputLabel  for="txtStock" value="Stock"/>
+                                    <div class="ui-inputgroup">
+                                        <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
+                                        <p:inputText  id="txtStock" placeholder="Stock" value="#{productoBeans.stock}" required="true"/>
+                                    </div>
+
+                                    <p:outputLabel for="txtPrecio" value="Precio"/>
+                                    <div class="ui-inputgroup">
+                                        <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
+                                        <p:inputText id="txtPrecio" placeholder="Precio" value="#{productoBeans.precio}" required="true"/>
+                                    </div>
+                                   <!--   <p:outputLabel  for="txtBodega" value="Bodegas"/>
+                                  <div class="ui-inputgroup">
+                                        <div class="ui-inputgroup-addon"><i class="pi pi-user"></i></div>
+                                        <p:selectOneMenu id="txtBodega" value="#{productoBeans.bodega.id}"  required="true">    
+                                            <f:selectItem itemLabel="Bodegas" itemValue=""/>
+                                            <f:selectItems value="#{bodegaBeans.listp}" var="p" itemLabel="#{p.nombre}" itemValue="#{p.id}" />
+                                        </p:selectOneMenu>
+                                    </div>-->
+                                </div>
+                            </div>
+
+
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                    </div>
+                                    <div class="col">
+                                        <p:commandButton  style="margin-right: 20px"  update=":mensaje formulario"  value="Guardar" styleClass="ui-button-raised"  action="#{productoBeans.add}" />   
+
+
+                                    </div>
+                                    <div class="col">
+                                        <p:commandButton   value="Cancelar"  styleClass="ui-button-raised ui-button-danger" type="reset"  update="formulario"/>           
+
+
+                                    </div>
+                                    <div class="col">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </h:form>
+                </div>
+                <div class="col">
+
+                </div>
+
+            </div>
+        </div>
+    </h:body>
+
+</html>

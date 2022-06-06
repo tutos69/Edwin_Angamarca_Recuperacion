@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:f="http://xmlns.jcp.org/jsf/core"
+       xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+       xmlns:p="http://primefaces.org/ui"
+       template="/WEB-INF/template.xhtml">
+    <h:head>
+        <title>Lista de Productos</title>
+    </h:head>
+    <ui:include src="menu.xhtml" />
+    <h:body>
+        <div class="card">
+            <h:form id="frmExclos"> 
+                <p:growl  id="mensajeGeneral3" sticky="false" showDetail="true" />   
+                <p:dataTable id="products" var="a"  value="#{bodegaBeans.listp}" styleClass="tabla" editable="true">
+                    <p:ajax listener="#{bodegaBeans.edit(a)}"  event="rowEdit" update=":frmExclos:mensajeGeneral3"/>
+
+                    <f:facet name="header">
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                            <h1>Lista de Productos</h1>
+
+                            <div>
+                                <p:commandButton id="toggler" type="button" value="Columnas" icon="pi pi-align-justify"/>
+                                <p:columnToggler datasource="products" trigger="toggler"/>
+                            </div>
+                            <div>
+                                <p:commandButton value="Actualizar" update=":frmExclos" styleClass="ui-button-raised ui-button-danger"/>
+                            </div>
+                        </div>
+                    </f:facet>
+
+                    <p:column headerText="ID">
+                        <f:facet name="header">Id</f:facet>#{a.id} 
+                    </p:column>
+
+                    <p:column headerText="Nombre">
+                        <p:cellEditor> 
+                            <f:facet name="output">
+                                <h:outputText value="#{a.nombre}"  />
+                            </f:facet> 
+                            <f:facet name="input">
+                                <h:inputText value="#{a.nombre}" />
+                            </f:facet> 
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Ciudad">
+                        <p:cellEditor> 
+                            <f:facet name="output">
+                                <h:outputText value="#{a.ciudad}"  />
+                            </f:facet> 
+                            <f:facet name="input">
+                                <h:inputText value="#{a.ciudad}" />
+                            </f:facet> 
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column headerText="Total">
+                        <f:facet name="header">Total</f:facet>#{bodegaBeans.total(a)} 
+                    </p:column>
+                    <p:column headerText="Eliminar">
+                        <p:commandButton value="Eliminar" action="#{bodegaBeans.delete(a)}" update="products" styleClass="ui-button-raised ui-button-danger"/>
+
+                    </p:column>
+                    <p:column headerText="Editar">
+                        <p:rowEditor />
+                    </p:column>
+                    <p:column headerText="Productos">
+
+                        <p:commandButton value="Ver Productos" update="products"  action="#{bodegaBeans.detalle(a)}" styleClass="ui-button-raised ui-button-danger" oncomplete="PF('valor').show(); "/>
+                    </p:column>
+                </p:dataTable>
+                <p:dialog widgetVar="valor" modal="true" showEffect="clip" header="NuevoRegistro" resizable="false">
+
+                    <p:dataTable id="detalle" var="o" value="#{bodegaBeans.detalles}" styleClass="tabla" editable="true" >
+                        <p:column headerText="ID">
+                            <f:facet name="header">Id</f:facet>#{o.id} 
+                        </p:column>
+                        <p:column headerText="Producto">
+
+                            <h:outputText value="#{o.nombre}"  />
+
+                        </p:column>
+                        <p:column headerText="Cantidad">
+
+                            <h:outputText value="#{o.stock}"/>
+
+                        </p:column>
+                        <p:column headerText="Precio">
+
+                            <h:outputText value="#{o.precio}"  />   
+                        </p:column>
+                    </p:dataTable>
+                    <p:commandButton  value="Cerrar" oncomplete="PF('valor').hide(); " update=":frmExclos"/>
+                </p:dialog>
+            </h:form>  
+        </div>
+    </h:body>
+</html>
